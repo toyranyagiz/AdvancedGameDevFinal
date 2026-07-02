@@ -25,6 +25,9 @@ AKeyEscapeExitTrigger::AKeyEscapeExitTrigger()
     MainMenuLevelName = FName("L_MainMenu");
     ReturnToMainMenuDelay = 3.0f;
     bHasTriggered = false;
+
+    WinMusic = nullptr;
+
 }
 
 void AKeyEscapeExitTrigger::BeginPlay()
@@ -102,6 +105,14 @@ void AKeyEscapeExitTrigger::ShowWinScreen(APlayerController* PlayerController)
 
         if (WinWidget)
         {
+            if (WinMusic)
+            {
+                UGameplayStatics::PlaySound2D(
+                    this,
+                    WinMusic
+                );
+            }
+
             WinWidget->AddToViewport();
         }
     }

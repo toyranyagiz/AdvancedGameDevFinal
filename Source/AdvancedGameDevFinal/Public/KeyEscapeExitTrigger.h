@@ -7,6 +7,7 @@
 
 class UBoxComponent;
 class UUserWidget;
+class USoundBase;
 
 UCLASS()
 class ADVANCEDGAMEDEVFINAL_API AKeyEscapeExitTrigger : public AActor
@@ -29,6 +30,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
     TSubclassOf<UUserWidget> WinScreenWidgetClass;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+    USoundBase* WinMusic;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
     FName MainMenuLevelName;

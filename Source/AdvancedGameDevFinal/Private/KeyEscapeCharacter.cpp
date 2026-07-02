@@ -17,6 +17,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "KeyEscapePistolItem.h"
 #include "GameFramework/PlayerController.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 AKeyEscapeCharacter::AKeyEscapeCharacter()
 {
@@ -44,9 +46,15 @@ AKeyEscapeCharacter::AKeyEscapeCharacter()
     HUDWidget = nullptr;
     EquippedFlashlight = nullptr;
 
+    PauseAction = nullptr;
+    PauseMenuWidgetClass = nullptr;
+    CurrentPauseMenuWidget = nullptr;
+
     bUseControllerRotationYaw = true;
     bUseControllerRotationPitch = false;
     bUseControllerRotationRoll = false;
+
+    LoseMusic = nullptr;
 
     GetCharacterMovement()->bOrientRotationToMovement = false;
     GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
@@ -214,6 +222,11 @@ void AKeyEscapeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
         if (ReloadAction)
         {
             EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &AKeyEscapeCharacter::ReloadInput);
+        }
+
+        if (PauseAction)
+        {
+            EnhancedInputComponent->BindAction(PauseAction, ETriggerEvent::Started, this, &AKeyEscapeCharacter::PauseInput);
         }
     }
 }
@@ -695,6 +708,14 @@ void AKeyEscapeCharacter::ShowLoseScreen()
         return;
     }
 
+    if (LoseMusic)
+    {
+        UGameplayStatics::PlaySound2D(
+            this,
+            LoseMusic
+        );
+    }
+
     if (LoseScreenWidgetClass)
     {
         UUserWidget* LoseWidget = CreateWidget<UUserWidget>(
@@ -901,4 +922,51 @@ void AKeyEscapeCharacter::SetReadingNote(bool bReading)
     {
         ClearInteraction();
     }
+}
+
+void AKeyEscapeCharacter::PauseInput()
+{
+    if (bIsDead || bIsReadingNote)
+    {
+        return;
+    }
+
+    if (!PauseMenuWidgetClass)
+    {
+        return;
+    }
+
+    APlayerController* PlayerController = Cast<APlayerController>(GetController());
+
+    if (!PlayerController)
+    {
+        return;
+    }
+
+    if (CurrentPauseMenuWidget && CurrentPauseMenuWidget->IsInViewport())
+    {
+        return;
+    }
+
+    ClearInteraction();
+
+    CurrentPauseMenuWidget = CreateWidget<UUserWidget>(
+        PlayerController,
+        PauseMenuWidgetClass
+    );
+
+    if (!CurrentPauseMenuWidget)
+    {
+        return;
+    }
+
+    CurrentPauseMenuWidget->AddToViewport();
+
+    FInputModeUIOnly UIInputMode;
+    UIInputMode.SetWidgetToFocus(CurrentPauseMenuWidget->TakeWidget());
+
+    PlayerController->SetInputMode(UIInputMode);
+    PlayerController->bShowMouseCursor = true;
+
+    UGameplayStatics::SetGamePaused(this, true);
 }

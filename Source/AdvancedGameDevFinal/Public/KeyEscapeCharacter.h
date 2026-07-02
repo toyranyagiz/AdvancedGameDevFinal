@@ -6,10 +6,12 @@
 #include "TimerManager.h"
 #include "KeyEscapeCharacter.generated.h"
 
+
 class UCameraComponent;
 class USceneComponent;
 class UInputMappingContext;
 class UInputAction;
+class UUserWidget;
 class UKeyEscapeHUDWidget;
 class AKeyEscapeItemBase;
 class AKeyEscapeFlashlight;
@@ -17,6 +19,7 @@ class AKeyEscapeBinocularItem;
 class UUserWidget;
 class AKeyEscapePistolItem;
 class AActor;
+class USoundBase;
 
 UCLASS()
 class ADVANCEDGAMEDEVFINAL_API AKeyEscapeCharacter : public ACharacter
@@ -131,6 +134,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
     UInputAction* ReloadAction;
 
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+    UInputAction* PauseAction;
+
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
     float WalkSpeed;
@@ -155,11 +161,20 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
     TSubclassOf<UUserWidget> LoseScreenWidgetClass;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+    USoundBase* LoseMusic;
+
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
     FName MainMenuLevelName;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
     float ReturnToMainMenuDelay;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+    TSubclassOf<UUserWidget> PauseMenuWidgetClass;
+
+    UPROPERTY()
+    UUserWidget* CurrentPauseMenuWidget;
 
     FTimerHandle ReturnToMainMenuTimerHandle;
 
@@ -244,6 +259,8 @@ private:
     bool IsCurrentItemBinocular() const;
 
     void ReloadInput();
+
+    void PauseInput();
 
     AKeyEscapePistolItem* FindPistolInInventory() const;
 
