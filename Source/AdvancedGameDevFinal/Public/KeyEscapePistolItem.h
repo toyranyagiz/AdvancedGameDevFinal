@@ -39,10 +39,10 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
     int32 MagazineSize;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
     int32 CurrentAmmo;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
     int32 ReserveAmmo;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")

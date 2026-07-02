@@ -4,6 +4,8 @@
 #include "KeyEscapeItemBase.h"
 #include "KeyEscapeFoodItem.generated.h"
 
+class USoundBase;
+
 UCLASS()
 class ADVANCEDGAMEDEVFINAL_API AKeyEscapeFoodItem : public AKeyEscapeItemBase
 {
@@ -18,4 +20,7 @@ public:
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Food")
     float HealAmount;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+    USoundBase* EatSound;
 };

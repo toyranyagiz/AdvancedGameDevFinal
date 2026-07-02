@@ -29,12 +29,12 @@ void UKeyEscapeMainMenuWidget::NativeConstruct()
 
 void UKeyEscapeMainMenuWidget::StartGame()
 {
-    UGameplayStatics::OpenLevel(this, GameLevelName);
+    UGameplayStatics::OpenLevel(this, FName("L_Game"));
 }
 
 void UKeyEscapeMainMenuWidget::StartTutorial()
 {
-    UGameplayStatics::OpenLevel(this, TutorialLevelName);
+    UGameplayStatics::OpenLevel(this, FName("L_Tutorial"));
 }
 
 void UKeyEscapeMainMenuWidget::QuitGame()
