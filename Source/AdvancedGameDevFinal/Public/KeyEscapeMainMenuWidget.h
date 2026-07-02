@@ -19,15 +19,24 @@ protected:
     UButton* StartButton;
 
     UPROPERTY(meta = (BindWidget))
+    UButton* TutorialButton;
+
+    UPROPERTY(meta = (BindWidget))
     UButton* QuitButton;
 
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Menu")
     FName GameLevelName;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Menu")
+    FName TutorialLevelName;
+
 private:
     UFUNCTION()
     void StartGame();
+
+    UFUNCTION()
+    void StartTutorial();
 
     UFUNCTION()
     void QuitGame();

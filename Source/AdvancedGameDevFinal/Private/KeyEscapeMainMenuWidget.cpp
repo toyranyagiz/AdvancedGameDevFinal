@@ -1,7 +1,6 @@
 #include "KeyEscapeMainMenuWidget.h"
 
 #include "Components/Button.h"
-#include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
@@ -10,10 +9,16 @@ void UKeyEscapeMainMenuWidget::NativeConstruct()
     Super::NativeConstruct();
 
     GameLevelName = FName("L_Game");
+    TutorialLevelName = FName("L_Tutorial");
 
     if (StartButton)
     {
         StartButton->OnClicked.AddDynamic(this, &UKeyEscapeMainMenuWidget::StartGame);
+    }
+
+    if (TutorialButton)
+    {
+        TutorialButton->OnClicked.AddDynamic(this, &UKeyEscapeMainMenuWidget::StartTutorial);
     }
 
     if (QuitButton)
@@ -24,10 +29,12 @@ void UKeyEscapeMainMenuWidget::NativeConstruct()
 
 void UKeyEscapeMainMenuWidget::StartGame()
 {
-    if (!GameLevelName.IsNone())
-    {
-        UGameplayStatics::OpenLevel(this, GameLevelName);
-    }
+    UGameplayStatics::OpenLevel(this, GameLevelName);
+}
+
+void UKeyEscapeMainMenuWidget::StartTutorial()
+{
+    UGameplayStatics::OpenLevel(this, TutorialLevelName);
 }
 
 void UKeyEscapeMainMenuWidget::QuitGame()
