@@ -3,7 +3,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "Engine/Engine.h"
 #include "KeyEscapeCharacter.h"
+#include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
+
 
 AKeyEscapeDoor::AKeyEscapeDoor()
 {
@@ -30,8 +32,10 @@ AKeyEscapeDoor::AKeyEscapeDoor()
     RequiredKeyID = FName("RedKey");
     DoorDisplayName = FText::FromString("Door");
 
-    OpenYaw = 90.0f;
-    OpenDuration = 1.2f;
+    OpenYaw = -90.0f;
+    OpenDuration = 1.0f;
+
+    DoorOpenSound = nullptr;
 
     bIsOpen = false;
     bIsOpening = false;
@@ -75,21 +79,6 @@ void AKeyEscapeDoor::Interact_Implementation(AActor* Interactor)
 
     if (!RequiredKeyID.IsNone() && !PlayerCharacter->HasKey(RequiredKeyID))
     {
-        if (GEngine)
-        {
-            FString Message = FString::Printf(
-                TEXT("You need key: %s"),
-                *RequiredKeyID.ToString()
-            );
-
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                1.5f,
-                FColor::Red,
-                Message
-            );
-        }
-
         return;
     }
 
@@ -126,15 +115,15 @@ void AKeyEscapeDoor::StartOpeningDoor()
     TargetOpenRotation = ClosedRotation;
     TargetOpenRotation.Yaw += OpenYaw;
 
-    if (GEngine)
+    if (DoorOpenSound)
     {
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Green,
-            TEXT("Door opening")
+        UGameplayStatics::PlaySoundAtLocation(
+            this,
+            DoorOpenSound,
+            GetActorLocation()
         );
     }
+
 }
 
 void AKeyEscapeDoor::UpdateDoorOpening(float DeltaSeconds)

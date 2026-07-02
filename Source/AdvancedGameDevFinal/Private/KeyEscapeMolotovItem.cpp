@@ -27,16 +27,6 @@ void AKeyEscapeMolotovItem::UseItem(AKeyEscapeCharacter* UserCharacter)
 
     if (!ProjectileClass)
     {
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                2.0f,
-                FColor::Red,
-                TEXT("Molotov Projectile Class is missing")
-            );
-        }
-
         return;
     }
 
@@ -84,15 +74,5 @@ void AKeyEscapeMolotovItem::UseItem(AKeyEscapeCharacter* UserCharacter)
         }
 
         UserCharacter->ConsumeCurrentRightHandItem();
-
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                1.5f,
-                FColor::Orange,
-                TEXT("Molotov thrown")
-            );
-        }
     }
 }

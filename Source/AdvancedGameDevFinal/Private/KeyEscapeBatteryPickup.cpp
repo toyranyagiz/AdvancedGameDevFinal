@@ -41,16 +41,6 @@ void AKeyEscapeBatteryPickup::Interact_Implementation(AActor* Interactor)
     {
         Character->AddFlashlightBattery(BatteryAmount);
 
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                2.0f,
-                FColor::Green,
-                TEXT("Battery picked up")
-            );
-        }
-
         if (PickupSound)
         {
             UGameplayStatics::PlaySoundAtLocation(

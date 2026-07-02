@@ -93,21 +93,6 @@ void AKeyEscapeEnemy::BeginPlay()
 
     FindPatrolPoints();
 
-    if (GEngine)
-    {
-        FString Message = FString::Printf(
-            TEXT("Found patrol points: %d"),
-            PatrolPoints.Num()
-        );
-
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            5.0f,
-            FColor::Yellow,
-            Message
-        );
-    }
-
     if (EnemyMovementLoopSound && EnemyMovementAudioComponent)
     {
         EnemyMovementAudioComponent->SetSound(EnemyMovementLoopSound);
@@ -194,22 +179,6 @@ float AKeyEscapeEnemy::TakeDamage(
 
     CurrentHealth -= DamageAmount;
 
-    if (GEngine)
-    {
-        FString Message = FString::Printf(
-            TEXT("Enemy Health: %.0f / %.0f"),
-            CurrentHealth,
-            MaxHealth
-        );
-
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Red,
-            Message
-        );
-    }
-
     if (CurrentHealth <= 0.0f)
     {
         Die();
@@ -258,21 +227,6 @@ void AKeyEscapeEnemy::UpdatePatrol()
         if (CurrentPatrolIndex >= PatrolPoints.Num())
         {
             CurrentPatrolIndex = 0;
-        }
-
-        if (GEngine)
-        {
-            FString Message = FString::Printf(
-                TEXT("Going to patrol point: %d"),
-                CurrentPatrolIndex + 1
-            );
-
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                1.2f,
-                FColor::Cyan,
-                Message
-            );
         }
     }
 
@@ -368,16 +322,6 @@ void AKeyEscapeEnemy::StartChase(AKeyEscapeCharacter* PlayerCharacter)
         EnemyMovementAudioComponent->SetVolumeMultiplier(ChaseSoundVolume);
     }
 
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Red,
-            TEXT("Enemy started chase")
-        );
-    }
-
     MoveToPlayer();
 }
 
@@ -396,16 +340,6 @@ void AKeyEscapeEnemy::StopChase()
     if (EnemyMovementAudioComponent && EnemyMovementAudioComponent->IsPlaying())
     {
         EnemyMovementAudioComponent->SetVolumeMultiplier(PatrolSoundVolume);
-    }
-
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Yellow,
-            TEXT("Enemy returned to patrol")
-        );
     }
 
     MoveToCurrentPatrolPoint();
@@ -455,16 +389,6 @@ void AKeyEscapeEnemy::TryAttack()
         AttackCooldown,
         false
     );
-
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Red,
-            TEXT("Enemy attacked")
-        );
-    }
 }
 
 void AKeyEscapeEnemy::ResetAttack()

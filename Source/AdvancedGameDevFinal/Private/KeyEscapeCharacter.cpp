@@ -388,11 +388,6 @@ bool AKeyEscapeCharacter::AddRightHandItem(AKeyEscapeItemBase* ItemToAdd)
 
     if (EmptySlotIndex == INDEX_NONE)
     {
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Inventory is full!"));
-        }
-
         return false;
     }
 
@@ -401,12 +396,6 @@ bool AKeyEscapeCharacter::AddRightHandItem(AKeyEscapeItemBase* ItemToAdd)
     ItemToAdd->OnPickedUp(this, RightHandPoint);
 
     SelectRightHandSlot(EmptySlotIndex);
-
-    if (GEngine)
-    {
-        FString Message = FString::Printf(TEXT("Item added to slot %d"), EmptySlotIndex + 1);
-        GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, Message);
-    }
 
     return true;
 }
@@ -434,12 +423,6 @@ void AKeyEscapeCharacter::SelectRightHandSlot(int32 SlotIndex)
             bool bShouldBeVisible = i == CurrentRightHandSlot;
             RightHandSlots[i]->SetItemVisibleInHand(bShouldBeVisible);
         }
-    }
-
-    if (GEngine)
-    {
-        FString Message = FString::Printf(TEXT("Selected slot %d"), CurrentRightHandSlot + 1);
-        GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Cyan, Message);
     }
 }
 
@@ -475,11 +458,6 @@ void AKeyEscapeCharacter::DropCurrentRightHandItem()
     FRotator DropRotation = GetActorRotation();
 
     CurrentItem->OnDropped(DropLocation, DropRotation);
-
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, TEXT("Item dropped"));
-    }
 
     SelectRightHandSlot(CurrentRightHandSlot);
 }
@@ -536,21 +514,12 @@ bool AKeyEscapeCharacter::PickupFlashlight(AKeyEscapeFlashlight* FlashlightToPic
 
     if (EquippedFlashlight)
     {
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("You already have a flashlight"));
-        }
 
         return false;
     }
 
     EquippedFlashlight = FlashlightToPickup;
     EquippedFlashlight->OnPickedUp(this, LeftHandPoint);
-
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("Flashlight picked up"));
-    }
 
     return true;
 }
@@ -564,10 +533,6 @@ void AKeyEscapeCharacter::AddFlashlightBattery(float Amount)
 
     if (!EquippedFlashlight)
     {
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("You need a flashlight first"));
-        }
 
         return;
     }
@@ -594,12 +559,6 @@ void AKeyEscapeCharacter::TakePlayerDamage(float DamageAmount)
         CurrentHealth = 0.0f;
     }
 
-    if (GEngine)
-    {
-        FString Message = FString::Printf(TEXT("Health: %.0f / %.0f"), CurrentHealth, MaxHealth);
-        GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Red, Message);
-    }
-
     if (CurrentHealth <= 0.0f)
     {
         Die();
@@ -623,12 +582,6 @@ void AKeyEscapeCharacter::HealPlayer(float HealAmount)
     if (CurrentHealth > MaxHealth)
     {
         CurrentHealth = MaxHealth;
-    }
-
-    if (GEngine)
-    {
-        FString Message = FString::Printf(TEXT("Health: %.0f / %.0f"), CurrentHealth, MaxHealth);
-        GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, Message);
     }
 }
 
@@ -660,12 +613,6 @@ void AKeyEscapeCharacter::Die()
     GetCharacterMovement()->DisableMovement();
 
     ClearInteraction();
-
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("PLAYER DIED - Lose Screen will be added later"));
-
-    }
 
     ShowLoseScreen();
 
@@ -726,21 +673,6 @@ void AKeyEscapeCharacter::AddKey(FName KeyID)
     if (!CollectedKeys.Contains(KeyID))
     {
         CollectedKeys.Add(KeyID);
-
-        if (GEngine)
-        {
-            FString Message = FString::Printf(
-                TEXT("Key collected: %s"),
-                *KeyID.ToString()
-            );
-
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                2.0f,
-                FColor::Green,
-                Message
-            );
-        }
     }
 }
 
@@ -848,15 +780,6 @@ bool AKeyEscapeCharacter::AddPistolAmmo(int32 AmmoAmount)
 
     if (!Pistol)
     {
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                1.5f,
-                FColor::Red,
-                TEXT("You need a pistol first")
-            );
-        }
 
         return false;
     }

@@ -97,16 +97,6 @@ void AKeyEscapeSpikeTrap::OnTrapOverlap(
         DamageCooldown,
         false
     );
-
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Red,
-            TEXT("Spike damage!")
-        );
-    }
 }
 
 void AKeyEscapeSpikeTrap::ResetDamage()

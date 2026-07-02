@@ -31,16 +31,6 @@ ATestInteractableActor::ATestInteractableActor()
 
 void ATestInteractableActor::Interact_Implementation(AActor* Interactor)
 {
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            2.0f,
-            FColor::Green,
-            TEXT("Interaction worked!")
-        );
-    }
-
     Destroy();
 }
 

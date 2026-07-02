@@ -53,22 +53,6 @@ void AKeyEscapeKeyItem::Interact_Implementation(AActor* Interactor)
             GetActorLocation()
         );
     }
-
-    if (GEngine)
-    {
-        FString Message = FString::Printf(
-            TEXT("Picked up key: %s"),
-            *KeyID.ToString()
-        );
-
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Green,
-            Message
-        );
-    }
-
     Destroy();
 }
 

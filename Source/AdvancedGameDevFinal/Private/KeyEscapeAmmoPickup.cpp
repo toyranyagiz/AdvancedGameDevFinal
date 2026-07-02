@@ -46,15 +46,6 @@ void AKeyEscapeAmmoPickup::Interact_Implementation(AActor* Interactor)
 
     if (bAdded)
     {
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                1.5f,
-                FColor::Green,
-                TEXT("Ammo picked up")
-            );
-        }
 
         if (PickupSound)
         {

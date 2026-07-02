@@ -23,15 +23,5 @@ void AKeyEscapeFoodItem::UseItem(AKeyEscapeCharacter* UserCharacter)
 
     UserCharacter->HealPlayer(HealAmount);
 
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            2.0f,
-            FColor::Green,
-            TEXT("Food used")
-        );
-    }
-
     UserCharacter->ConsumeCurrentRightHandItem();
 }

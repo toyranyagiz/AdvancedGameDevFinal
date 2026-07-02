@@ -60,21 +60,6 @@ void AKeyEscapeExitTrigger::OnExitOverlap(
 
     if (!RequiredKeyID.IsNone() && !PlayerCharacter->HasKey(RequiredKeyID))
     {
-        if (GEngine)
-        {
-            FString Message = FString::Printf(
-                TEXT("You need key: %s"),
-                *RequiredKeyID.ToString()
-            );
-
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                2.0f,
-                FColor::Red,
-                Message
-            );
-        }
-
         return;
     }
 

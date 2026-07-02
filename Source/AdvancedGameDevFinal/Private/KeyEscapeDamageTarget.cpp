@@ -44,22 +44,6 @@ float AKeyEscapeDamageTarget::TakeDamage(
 
     CurrentHealth -= DamageAmount;
 
-    if (GEngine)
-    {
-        FString Message = FString::Printf(
-            TEXT("Target Health: %.0f / %.0f"),
-            CurrentHealth,
-            MaxHealth
-        );
-
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Red,
-            Message
-        );
-    }
-
     if (CurrentHealth <= 0.0f)
     {
         Destroy();

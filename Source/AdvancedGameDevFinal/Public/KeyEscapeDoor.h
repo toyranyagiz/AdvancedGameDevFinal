@@ -6,6 +6,7 @@
 #include "KeyEscapeDoor.generated.h"
 
 class UStaticMeshComponent;
+class USoundBase;
 
 UCLASS()
 class ADVANCEDGAMEDEVFINAL_API AKeyEscapeDoor : public AActor, public IKeyEscapeInteractable
@@ -44,6 +45,9 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Door")
     bool bIsOpen;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+    USoundBase* DoorOpenSound;
 
 private:
     bool bIsOpening;

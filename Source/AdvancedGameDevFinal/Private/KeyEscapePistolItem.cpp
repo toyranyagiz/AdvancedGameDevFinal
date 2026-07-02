@@ -45,17 +45,6 @@ void AKeyEscapePistolItem::UseItem(AKeyEscapeCharacter* UserCharacter)
                 UserCharacter->GetActorLocation()
             );
         }
-
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                1.5f,
-                FColor::Red,
-                TEXT("No ammo")
-            );
-        }
-
         return;
     }
 
@@ -111,33 +100,10 @@ void AKeyEscapePistolItem::UseItem(AKeyEscapeCharacter* UserCharacter)
             this,
             nullptr
         );
-
-        if (GEngine)
-        {
-            FString Message = FString::Printf(
-                TEXT("Hit: %s"),
-                *HitActor->GetName()
-            );
-
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                1.5f,
-                FColor::Green,
-                Message
-            );
-        }
     }
     else
     {
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                1.0f,
-                FColor::Yellow,
-                TEXT("Shot missed")
-            );
-        }
+     
     }
 }
 
@@ -172,22 +138,6 @@ void AKeyEscapePistolItem::ReloadItem(AKeyEscapeCharacter* UserCharacter)
             UserCharacter->GetActorLocation()
         );
     }
-
-    if (GEngine)
-    {
-        FString Message = FString::Printf(
-            TEXT("Reloaded: %d / %d"),
-            CurrentAmmo,
-            ReserveAmmo
-        );
-
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Green,
-            Message
-        );
-    }
 }
 
 void AKeyEscapePistolItem::AddReserveAmmo(int32 AmmoAmount)
@@ -198,21 +148,6 @@ void AKeyEscapePistolItem::AddReserveAmmo(int32 AmmoAmount)
     }
 
     ReserveAmmo += AmmoAmount;
-
-    if (GEngine)
-    {
-        FString AmmoMessage = FString::Printf(
-            TEXT("Reserve Ammo: %d"),
-            ReserveAmmo
-        );
-
-        GEngine->AddOnScreenDebugMessage(
-            -1,
-            1.5f,
-            FColor::Green,
-            AmmoMessage
-        );
-    }
 }
 
 void AKeyEscapePistolItem::ResetFire()

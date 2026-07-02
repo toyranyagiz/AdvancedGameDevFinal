@@ -49,16 +49,6 @@ void AKeyEscapeNoteActor::Interact_Implementation(AActor* Interactor)
 
     if (!NoteWidgetClass)
     {
-        if (GEngine)
-        {
-            GEngine->AddOnScreenDebugMessage(
-                -1,
-                2.0f,
-                FColor::Red,
-                TEXT("Note Widget Class is missing")
-            );
-        }
-
         return;
     }
 
